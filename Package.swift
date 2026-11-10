@@ -30,6 +30,12 @@ let package = Package(
                 .product(name: "ISO 8601", package: "swift-iso-8601"),
             ]
         ),
+        .executableTarget(
+            name: "Schema Org Vocabulary Generator",
+            dependencies: [
+                .product(name: "RFC 8259", package: "swift-rfc-8259")
+            ]
+        ),
         .testTarget(
             name: "Schema Org Vocabulary Tests",
             dependencies: [
