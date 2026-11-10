@@ -6,5 +6,7 @@ struct Vocabulary {
 
     var members: [Swift.String: [Swift.String]]
 
+    var dataTypes: Swift.Set<Swift.String>
+
     var properties: [Vocabulary.Property]
 }

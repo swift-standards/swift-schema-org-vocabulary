@@ -1,32 +1,77 @@
 extension Generator {
 
     var files: [Generator.File] {
-        var files: [Generator.File] = []
-        for type in types {
-            files.append(.init(name: "SchemaOrg.\(type).Protocol.swift", text: protocolText(of: type)))
-            if enumerations.contains(type) {
-                files.append(.init(name: "SchemaOrg.\(type).swift", text: enumerationText(of: type)))
-                files.append(.init(name: "SchemaOrg.\(type).Instance.swift", text: instanceText(of: type)))
-            } else {
-                files.append(.init(name: "SchemaOrg.\(type).swift", text: structText(of: type)))
-            }
-        }
-        for property in properties.values.sorted(by: { $0.name < $1.name }) {
-            if property.domains.count > 1 {
-                files.append(.init(name: "SchemaOrg.Domain.\(Self.upper(property.name)).swift", text: domainText(of: property)))
-            }
-            if !property.cases.isEmpty {
-                files.append(.init(name: "SchemaOrg.Range.\(Self.upper(property.name)).swift", text: rangeText(of: property)))
-            }
-        }
-        files.append(.init(name: "SchemaOrg+Hierarchy.swift", text: hierarchyText))
-        var keys: [Swift.String: [Swift.String]] = [:]
-        for property in properties.values {
-            keys[property.type, default: []].append(property.name)
-        }
-        for (type, names) in keys {
-            files.append(.init(name: "SchemaOrg.Key where V == \(type).swift", text: keyText(of: type, names: names.sorted())))
-        }
-        return files
+        [
+            Generator.File(name: "SchemaOrg.Class+Vocabulary.swift", text: classText),
+            Generator.File(name: "SchemaOrg.Property+Vocabulary.swift", text: propertyText),
+            Generator.File(name: "SchemaOrg.Member+Vocabulary.swift", text: memberText),
+            Generator.File(name: "SchemaOrg.Node+Vocabulary.swift", text: nodeText),
+            Generator.File(name: "SchemaOrg.Value+Vocabulary.swift", text: valueText),
+            Generator.File(name: "SchemaOrg.Assignment+Vocabulary.swift", text: assignmentText),
+        ]
+    }
+
+    var classText: Swift.String {
+        "extension SchemaOrg.Class {\n\n"
+            + classes.map { term in
+                Self.declaration(
+                    Self.name(term),
+                    term: term,
+                    arguments: [("parents", Self.references(vocabulary.parents[term] ?? []))]
+                )
+            }.joined(separator: "\n")
+            + "}\n\n" + Self.index(of: "SchemaOrg.Class", names: classes.map(Self.name))
+    }
+
+    var propertyText: Swift.String {
+        "extension SchemaOrg.Property {\n\n"
+            + vocabulary.properties.map { property in
+                Self.declaration(
+                    Self.identifier(property.name),
+                    term: property.name,
+                    arguments: [("domains", Self.references(property.domains)), ("ranges", Self.references(property.range))]
+                )
+            }.joined(separator: "\n")
+            + "}\n\n" + Self.index(of: "SchemaOrg.Property", names: vocabulary.properties.map { Self.identifier($0.name) })
+    }
+
+    var memberText: Swift.String {
+        let members = vocabulary.members.keys.sorted()
+        return "extension SchemaOrg.Member {\n\n"
+            + members.map { term in
+                Self.declaration(
+                    Self.name(term),
+                    term: term,
+                    arguments: [("classes", Self.references(vocabulary.members[term] ?? []))]
+                )
+            }.joined(separator: "\n")
+            + "}\n\n" + Self.index(of: "SchemaOrg.Member", names: members.map(Self.name))
+    }
+
+    var nodeText: Swift.String {
+        "extension SchemaOrg.Node {\n\n"
+            + nodeClasses.map { term in
+                "    public static func \(Self.name(term))(_ assignments: SchemaOrg.Assignment...) -> Self {\n"
+                    + "        Self(.\(Self.name(term)), assignments)\n    }\n"
+            }.joined(separator: "\n")
+            + "}\n"
+    }
+
+    var valueText: Swift.String {
+        "extension SchemaOrg.Value {\n\n"
+            + nodeClasses.map { term in
+                "    public static func \(Self.name(term))(_ assignments: SchemaOrg.Assignment...) -> Self {\n"
+                    + "        Self(SchemaOrg.Node(.\(Self.name(term)), assignments))\n    }\n"
+            }.joined(separator: "\n")
+            + "}\n"
+    }
+
+    var assignmentText: Swift.String {
+        "extension SchemaOrg.Assignment {\n\n"
+            + vocabulary.properties.map { property in
+                "    public static func \(Self.identifier(property.name))(_ values: SchemaOrg.Value...) -> Self {\n"
+                    + "        Self(.\(Self.identifier(property.name)), values)\n    }\n"
+            }.joined(separator: "\n")
+            + "}\n"
     }
 }

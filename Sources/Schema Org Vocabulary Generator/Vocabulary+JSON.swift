@@ -13,24 +13,27 @@ extension Vocabulary {
         var classes: Swift.Set<Swift.String> = []
         var superclasses: [Swift.String: [Swift.String]] = [:]
         var members: [Swift.String: [Swift.String]] = [:]
+        var dataTypes: Swift.Set<Swift.String> = []
         var nodes: [(name: Swift.String, node: RFC_8259.Value)] = []
         for node in graph {
             guard let name = node["@id"]?.string.flatMap(Self.term(of:)) else { continue }
             let types = Self.identifiers(node["@type"])
             if types.contains("rdfs:Class") {
                 classes.insert(name)
+                if types.contains(Self.prefix + "DataType") {
+                    dataTypes.insert(name)
+                }
                 superclasses[name] = Self.identifiers(node["rdfs:subClassOf"]).compactMap(Self.term(of:))
             } else if types.contains("rdf:Property") {
                 nodes.append((name, node))
             } else {
-                for type in types.compactMap(Self.term(of:)) {
-                    members[type, default: []].append(name)
-                }
+                members[name, default: []].append(contentsOf: types.compactMap(Self.term(of:)))
             }
         }
         self.classes = classes
         self.parents = superclasses.mapValues { $0.filter(classes.contains).sorted() }
-        self.members = members
+        self.members = members.mapValues { $0.filter(classes.contains).sorted() }.filter { !$0.value.isEmpty }
+        self.dataTypes = dataTypes
         self.properties = nodes.sorted { $0.name < $1.name }.map { name, node in
             Vocabulary.Property(
                 name: name,
