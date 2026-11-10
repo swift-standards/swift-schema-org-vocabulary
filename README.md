@@ -1,12 +1,6 @@
 # swift-schema-org-vocabulary
 
-Use this package when you describe a page, an app, a product or a person with schema.org structured data, or read such data back. Every schema.org type is a Swift value: build one with its initializer, such as `SchemaOrg.SoftwareApplication(name:url:operatingSystem:offers:)`, and write it with `JSONLD.Document(app).bytes`. Read one with `SchemaOrg.SoftwareApplication.instances(in:)` from a `JSONLD.Document`. Set several values of one property with a key, as in `list[.itemListElement] = [...]`. The JSON-LD itself comes from swift-w3c-json-ld.
-
-```swift
-JSONLD.Document(SchemaOrg.SoftwareApplication(name: app.name, url: app.page, operatingSystem: .macOS, offers: .free)).bytes
-```
-
-The types are generated from schema.org's own vocabulary release, the `schemaorg-current-https.jsonld` file of version 30.1 (16 September 2026), pending and extension terms included. The generator reads that file and writes `Sources/Schema Org Vocabulary/Generated`, one file per type, range, domain and key group; it is not kept in this repository. The types refer to each other through their properties' ranges in cycles, Thing to CreativeWork and back, so they cannot be split into modules that depend on each other in one direction. They stay one module, which a full debug rebuild compiles in about 70 seconds on an Apple silicon Mac.
+Use this package when you describe a page, an app, a product or a person with schema.org structured data, or read such data back. Every schema.org type is a Swift value: build one with its initializer, as in `JSONLD.Document(SchemaOrg.SoftwareApplication(name: app.name, url: app.page, operatingSystem: .macOS, offers: .free)).bytes`, and read one with `SchemaOrg.SoftwareApplication.instances(in:)` from a `JSONLD.Document`. Set several values of one property with a key, as in `list[.itemListElement] = [...]`. The JSON-LD itself comes from swift-w3c-json-ld. The types are generated from schema.org's own vocabulary release, the `schemaorg-current-https.jsonld` file of version 30.1 (16 September 2026), pending and extension terms included, into `Sources/Schema Org Vocabulary/Generated`, one file per type, range, domain and key group. The types refer to each other through their properties' ranges in cycles, Thing to CreativeWork and back, so they stay one module.
 
 ## Laws
 
