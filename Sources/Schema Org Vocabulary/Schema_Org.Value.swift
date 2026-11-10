@@ -1,4 +1,4 @@
-extension SchemaOrg {
+extension Schema_Org {
 
     public struct Value: Sendable, Hashable {
 
@@ -10,13 +10,13 @@ extension SchemaOrg {
     }
 }
 
-extension SchemaOrg.Value {
+extension Schema_Org.Value {
 
-    public init(_ node: SchemaOrg.Node) {
+    public init(_ node: Schema_Org.Node) {
         self.init(.node(node.node))
     }
 
-    public init(_ member: SchemaOrg.Member) {
+    public init(_ member: Schema_Org.Member) {
         self.init(.string(member.iri))
     }
 
@@ -57,12 +57,12 @@ extension SchemaOrg.Value {
         Self(.string(duration.description))
     }
 
-    public static func member(_ member: SchemaOrg.Member) -> Self {
+    public static func member(_ member: Schema_Org.Member) -> Self {
         Self(member)
     }
 }
 
-extension SchemaOrg.Value: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
+extension Schema_Org.Value: ExpressibleByStringLiteral, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
 
     public init(stringLiteral value: String) {
         self.init(value)
@@ -77,11 +77,11 @@ extension SchemaOrg.Value: ExpressibleByStringLiteral, ExpressibleByIntegerLiter
     }
 }
 
-extension SchemaOrg.Value {
+extension Schema_Org.Value {
 
-    public var node: SchemaOrg.Node? {
+    public var node: Schema_Org.Node? {
         guard let node = value.node, !node.types.isEmpty || !node.properties.isEmpty else { return nil }
-        return SchemaOrg.Node(node: node)
+        return Schema_Org.Node(node: node)
     }
 
     public var text: String? {
@@ -100,15 +100,15 @@ extension SchemaOrg.Value {
 
     public var boolean: Bool? {
         if let boolean = value.literal?.bool { return boolean }
-        return switch SchemaOrg.term(of: value) {
+        return switch Schema_Org.term(of: value) {
         case "True": true
         case "False": false
         default: nil
         }
     }
 
-    public var member: SchemaOrg.Member? {
-        SchemaOrg.term(of: value).flatMap(SchemaOrg.Member.named)
+    public var member: Schema_Org.Member? {
+        Schema_Org.term(of: value).flatMap(Schema_Org.Member.named)
     }
 
     public var url: RFC_3986.URI? {

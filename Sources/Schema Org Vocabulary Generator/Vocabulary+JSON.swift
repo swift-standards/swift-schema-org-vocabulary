@@ -4,7 +4,7 @@ extension Vocabulary {
 
     init(json bytes: [Byte]) throws(Vocabulary.Error) {
         let document: RFC_8259.Value
-        do {
+        do throws(RFC_8259.Error) {
             document = try RFC_8259.Decode.parse(bytes)
         } catch {
             throw .json(error)

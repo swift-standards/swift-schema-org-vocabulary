@@ -1,4 +1,4 @@
-extension SchemaOrg.Property {
+extension Schema_Org.Property {
 
     public static let about: Self = Self("about", domains: [.certification, .communicateAction, .creativeWork, .definedTerm, .definedTermSet, .event], ranges: [.thing])
 
@@ -3189,9 +3189,9 @@ extension SchemaOrg.Property {
     public static let yield: Self = Self("yield", domains: [.howTo], ranges: [.quantitativeValue, .text])
 }
 
-extension SchemaOrg.Property {
+extension Schema_Org.Property {
 
-    static let all: [SchemaOrg.Property] = [
+    static let all: [Schema_Org.Property] = [
         .about,
         .abridged,
         .abstract,

@@ -1,31 +1,31 @@
-extension SchemaOrg.Node {
+extension Schema_Org.Node {
 
-    public var findings: [SchemaOrg.Finding] {
-        var findings: [SchemaOrg.Finding] = []
+    public var findings: [Schema_Org.Finding] {
+        var findings: [Schema_Org.Finding] = []
         for entry in node.properties {
-            guard let property = SchemaOrg.Property.index[entry.key] else { continue }
+            guard let property = Schema_Org.Property.index[entry.key] else { continue }
             if !property.domains.isEmpty, !classes.isEmpty,
                 !classes.contains(where: { type in property.domains.contains { type.isSubclass(of: $0) } })
             {
-                findings.append(SchemaOrg.Finding(property: property, kind: .domain))
+                findings.append(Schema_Org.Finding(property: property, kind: .domain))
             }
-            for value in entry.values.map(SchemaOrg.Value.init) where !property.ranges.isEmpty && !value.fits(property.ranges) {
-                findings.append(SchemaOrg.Finding(property: property, kind: .range(value)))
+            for value in entry.values.map(Schema_Org.Value.init) where !property.ranges.isEmpty && !value.fits(property.ranges) {
+                findings.append(Schema_Org.Finding(property: property, kind: .range(value)))
             }
         }
         return findings
     }
 }
 
-extension SchemaOrg.Value {
+extension Schema_Org.Value {
 
-    func fits(_ ranges: [SchemaOrg.Class]) -> Bool {
+    func fits(_ ranges: [Schema_Org.Class]) -> Bool {
         ranges.contains { range in
             range == .dataType || fits(range)
         }
     }
 
-    func fits(_ range: SchemaOrg.Class) -> Bool {
+    func fits(_ range: Schema_Org.Class) -> Bool {
         if let member, member.classes.contains(where: { $0.isSubclass(of: range) }) {
             return true
         }
@@ -33,7 +33,7 @@ extension SchemaOrg.Value {
         case .node(let node):
             return node.types.isEmpty
                 ? !range.isDataType || range.isSubclass(of: .url)
-                : SchemaOrg.Node(node: node).isInstance(of: range)
+                : Schema_Org.Node(node: node).isInstance(of: range)
 
         case .literal(let literal):
             if literal.bool != nil { return range.isSubclass(of: .boolean) }
@@ -41,14 +41,14 @@ extension SchemaOrg.Value {
             return range.isSubclass(of: .number) ? number != nil : range.isDataType && !range.isSubclass(of: .boolean)
 
         case .list(let values):
-            return values.allSatisfy { SchemaOrg.Value($0).fits(range) }
+            return values.allSatisfy { Schema_Org.Value($0).fits(range) }
         }
     }
 }
 
-extension SchemaOrg.Class {
+extension Schema_Org.Class {
 
     var isDataType: Bool {
-        self == .dataType || [SchemaOrg.Class.text, .number, .boolean, .date, .dateTime, .time, .quantity].contains { isSubclass(of: $0) }
+        self == .dataType || [Schema_Org.Class.text, .number, .boolean, .date, .dateTime, .time, .quantity].contains { isSubclass(of: $0) }
     }
 }

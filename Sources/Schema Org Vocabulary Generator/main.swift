@@ -12,7 +12,7 @@
     import ucrt
 #endif
 
-do {
+do throws(Generator.Error) {
     try Generator.run(CommandLine.arguments)
 } catch {
     print("Schema Org Vocabulary Generator: \(error)")

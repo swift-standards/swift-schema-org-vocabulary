@@ -1,16 +1,16 @@
 import Schema_Org_Vocabulary
 import Testing
 
-enum `SchemaOrg Tests` {}
+enum `Schema_Org Tests` {}
 
-extension `SchemaOrg Tests` {
+extension `Schema_Org Tests` {
     @Suite struct Test {
         @Suite struct Unit {}
         @Suite struct `Edge Case` {}
     }
 }
 
-extension `SchemaOrg Tests` {
+extension `Schema_Org Tests` {
 
     static func text(_ node: SchemaOrg.Node) -> String {
         String(decoding: JSONLD.Document(node).bytes, as: UTF8.self)
@@ -25,7 +25,7 @@ extension `SchemaOrg Tests` {
     }
 }
 
-extension `SchemaOrg Tests`.Test.Unit {
+extension `Schema_Org Tests`.Test.Unit {
 
     @Test
     func `the vocabulary is schema.org 30.1`() {
@@ -36,12 +36,12 @@ extension `SchemaOrg Tests`.Test.Unit {
     func `an application writes as JSON-LD with the schema.org context`() throws {
         let app = SchemaOrg.Node.softwareApplication(
             .name("Laurie"),
-            .url(.url(try `SchemaOrg Tests`.uri("https://rule.law/apps/laurie"))),
+            .url(.url(try `Schema_Org Tests`.uri("https://rule.law/apps/laurie"))),
             .operatingSystem("macOS"),
             .offers(.offer(.price(0)))
         )
         #expect(
-            `SchemaOrg Tests`.text(app)
+            `Schema_Org Tests`.text(app)
                 == #"{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Laurie","url":"https://rule.law/apps/laurie","operatingSystem":"macOS","offers":{"@type":"Offer","price":0}}"#
         )
     }
@@ -52,7 +52,7 @@ extension `SchemaOrg Tests`.Test.Unit {
             .itemListElement(.listItem(.name("Home"), .position(1)), .listItem(.name("Apps"), .position(2)))
         )
         #expect(
-            `SchemaOrg Tests`.text(list)
+            `Schema_Org Tests`.text(list)
                 == #"{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","name":"Home","position":1},{"@type":"ListItem","name":"Apps","position":2}]}"#
         )
         #expect(list[.itemListElement].compactMap { $0.node?[.position].first?.integer } == [1, 2])
@@ -62,7 +62,7 @@ extension `SchemaOrg Tests`.Test.Unit {
     func `enumeration members write as schema.org IRIs`() {
         let offer = SchemaOrg.Node.offer(.availability(.member(.inStock)), .itemCondition(.member(.newCondition)))
         #expect(
-            `SchemaOrg Tests`.text(offer)
+            `Schema_Org Tests`.text(offer)
                 == #"{"@context":"https://schema.org","@type":"Offer","availability":"https://schema.org/InStock","itemCondition":"https://schema.org/NewCondition"}"#
         )
     }
@@ -77,14 +77,14 @@ extension `SchemaOrg Tests`.Test.Unit {
             .startDate(.date(try #require(ISO_8601.CalendarDate(extended: "2026-11-10"))))
         )
         #expect(
-            `SchemaOrg Tests`.text(event)
+            `Schema_Org Tests`.text(event)
                 == #"{"@context":"https://schema.org","@type":"Event","name":"Launch","duration":"PT1H30M","isAccessibleForFree":true,"maximumAttendeeCapacity":100,"startDate":"2026-11-10"}"#
         )
     }
 
     @Test
     func `a document reads back into nodes and values`() throws {
-        let document = try `SchemaOrg Tests`.document(
+        let document = try `Schema_Org Tests`.document(
             #"{"@context":"http://schema.org","@graph":[{"@type":"SoftwareApplication","name":"Laurie","offers":{"@type":"Offer","price":"0","itemCondition":"http://schema.org/NewCondition"}},{"@type":"Person","name":"Coen"}]}"#
         )
         let apps = try SchemaOrg.Node.instances(of: .softwareApplication, in: document)
@@ -99,7 +99,7 @@ extension `SchemaOrg Tests`.Test.Unit {
 
     @Test
     func `prefixed names, full IRIs and aliases read the same`() throws {
-        let document = try `SchemaOrg Tests`.document(
+        let document = try `Schema_Org Tests`.document(
             #"{"@context":["https://schema.org/docs/jsonldcontext.jsonld",{"s":"https://schema.org/"}],"type":"s:Book","https://schema.org/name":"Wet","s:author":{"@type":"Person","name":"A"},"https://example.com/extra":1}"#
         )
         let book = try #require(try SchemaOrg.Node.instances(of: .book, in: document).first)
@@ -121,7 +121,7 @@ extension `SchemaOrg Tests`.Test.Unit {
     }
 }
 
-extension `SchemaOrg Tests`.Test.`Edge Case` {
+extension `Schema_Org Tests`.Test.`Edge Case` {
 
     @Test
     func `members read from every spelling`() {
@@ -151,7 +151,7 @@ extension `SchemaOrg Tests`.Test.`Edge Case` {
         #expect(SchemaOrg.Class.named("SoftwareApplication").parents == [.creativeWork])
         var node = SchemaOrg.Node(type, [SchemaOrg.Assignment(SchemaOrg.Property("warpFactor"), [9])])
         node[.name] = ["Enterprise"]
-        #expect(`SchemaOrg Tests`.text(node) == #"{"@context":"https://schema.org","@type":"Spaceship","warpFactor":9,"name":"Enterprise"}"#)
+        #expect(`Schema_Org Tests`.text(node) == #"{"@context":"https://schema.org","@type":"Spaceship","warpFactor":9,"name":"Enterprise"}"#)
         node[.name] = []
         #expect(node.node["name"].isEmpty)
     }

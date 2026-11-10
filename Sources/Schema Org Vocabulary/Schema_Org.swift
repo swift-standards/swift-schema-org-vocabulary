@@ -1,6 +1,8 @@
-public enum SchemaOrg {}
+public enum Schema_Org {}
 
-extension SchemaOrg {
+public typealias SchemaOrg = Schema_Org
+
+extension Schema_Org {
 
     public static let version = "30.1"
 
@@ -11,7 +13,7 @@ extension SchemaOrg {
     static let namespaces = ["https://schema.org/", "http://schema.org/", "schema:"]
 }
 
-extension SchemaOrg {
+extension Schema_Org {
 
     static func term(ofIRI iri: String) -> String {
         namespaces.first(where: iri.hasPrefix).map { String(iri.dropFirst($0.count)) } ?? iri

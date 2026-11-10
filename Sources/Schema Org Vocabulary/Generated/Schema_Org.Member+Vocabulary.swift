@@ -1,4 +1,4 @@
-extension SchemaOrg.Member {
+extension Schema_Org.Member {
 
     public static let abdomen: Self = Self("Abdomen", classes: [.physicalExam])
 
@@ -1093,9 +1093,9 @@ extension SchemaOrg.Member {
     public static let zoneBoardingPolicy: Self = Self("ZoneBoardingPolicy", classes: [.boardingPolicyType])
 }
 
-extension SchemaOrg.Member {
+extension Schema_Org.Member {
 
-    static let all: [SchemaOrg.Member] = [
+    static let all: [Schema_Org.Member] = [
         .abdomen,
         .activationFee,
         .activeActionStatus,

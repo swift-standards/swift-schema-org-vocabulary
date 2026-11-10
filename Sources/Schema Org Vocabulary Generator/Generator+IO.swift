@@ -52,7 +52,7 @@ extension Generator {
         guard arguments.count == 3 else { throw .usage }
         let bytes = try read(arguments[1])
         let vocabulary: Vocabulary
-        do {
+        do throws(Vocabulary.Error) {
             vocabulary = try Vocabulary(json: bytes)
         } catch {
             throw .vocabulary(error)

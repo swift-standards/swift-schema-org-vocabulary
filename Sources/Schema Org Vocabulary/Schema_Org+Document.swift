@@ -1,4 +1,4 @@
-extension SchemaOrg {
+extension Schema_Org {
 
     public static let loader = W3C_JSON_LD.Context.Loader { iri in
         let known = [
@@ -21,7 +21,7 @@ extension SchemaOrg {
 
     public static func nodes(
         in document: W3C_JSON_LD.Document,
-        loader: W3C_JSON_LD.Context.Loader = SchemaOrg.loader
+        loader: W3C_JSON_LD.Context.Loader = Schema_Org.loader
     ) throws(W3C_JSON_LD.Error) -> [W3C_JSON_LD.Node] {
         var active = W3C_JSON_LD.Context.Active()
         active.vocabulary = namespace

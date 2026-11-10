@@ -1,4 +1,4 @@
-extension SchemaOrg.Class {
+extension Schema_Org.Class {
 
     public static let `3DModel`: Self = Self("3DModel", parents: [.mediaObject])
 
@@ -1879,9 +1879,9 @@ extension SchemaOrg.Class {
     public static let zoo: Self = Self("Zoo", parents: [.civicStructure])
 }
 
-extension SchemaOrg.Class {
+extension Schema_Org.Class {
 
-    static let all: [SchemaOrg.Class] = [
+    static let all: [Schema_Org.Class] = [
         .`3DModel`,
         .amRadioChannel,
         .apiReference,

@@ -1,9 +1,9 @@
-extension SchemaOrg.Finding {
+extension Schema_Org.Finding {
 
     public enum Kind: Sendable, Hashable {
 
         case domain
 
-        case range(SchemaOrg.Value)
+        case range(Schema_Org.Value)
     }
 }
