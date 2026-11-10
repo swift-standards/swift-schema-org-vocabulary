@@ -1,0 +1,206 @@
+extension SchemaOrg {
+
+    public struct OnlineStore: SchemaOrg.OnlineStore.`Protocol`, Swift.Hashable {
+
+        public static let type = "OnlineStore"
+
+        public var node: W3C_JSON_LD.Node
+
+        public init(node: W3C_JSON_LD.Node) {
+            self.node = node
+        }
+    }
+}
+
+extension SchemaOrg.OnlineStore {
+
+    public init(
+        id: Swift.String? = nil,
+        additionalType: SchemaOrg.Range.AdditionalType? = nil,
+        alternateName: Swift.String? = nil,
+        description: SchemaOrg.Range.Description? = nil,
+        disambiguatingDescription: Swift.String? = nil,
+        identifier: SchemaOrg.Range.Identifier? = nil,
+        image: SchemaOrg.Range.Image? = nil,
+        mainEntityOfPage: SchemaOrg.Range.MainEntityOfPage? = nil,
+        name: Swift.String? = nil,
+        owner: SchemaOrg.Range.Owner? = nil,
+        potentialAction: SchemaOrg.Action? = nil,
+        sameAs: RFC_3986.URI? = nil,
+        subjectOf: SchemaOrg.Range.SubjectOf? = nil,
+        url: RFC_3986.URI? = nil,
+        isStoreOn: SchemaOrg.OnlineMarketplace? = nil,
+        acceptedPaymentMethod: SchemaOrg.Range.AcceptedPaymentMethod? = nil,
+        actionableFeedbackPolicy: SchemaOrg.Range.ActionableFeedbackPolicy? = nil,
+        address: SchemaOrg.Range.Address? = nil,
+        agentInteractionStatistic: SchemaOrg.InteractionCounter? = nil,
+        aggregateRating: SchemaOrg.AggregateRating? = nil,
+        alumni: SchemaOrg.Person? = nil,
+        areaServed: SchemaOrg.Range.AreaServed? = nil,
+        authorizedRepresentative: SchemaOrg.Range.AuthorizedRepresentative? = nil,
+        award: Swift.String? = nil,
+        awards: Swift.String? = nil,
+        brand: SchemaOrg.Range.Brand? = nil,
+        companyRegistration: SchemaOrg.Certification? = nil,
+        contactPoint: SchemaOrg.ContactPoint? = nil,
+        contactPoints: SchemaOrg.ContactPoint? = nil,
+        correctionsPolicy: SchemaOrg.Range.CorrectionsPolicy? = nil,
+        department: SchemaOrg.Organization? = nil,
+        dissolutionDate: ISO_8601.CalendarDate? = nil,
+        diversityPolicy: SchemaOrg.Range.DiversityPolicy? = nil,
+        diversityStaffingReport: SchemaOrg.Range.DiversityStaffingReport? = nil,
+        duns: Swift.String? = nil,
+        email: Swift.String? = nil,
+        employee: SchemaOrg.Person? = nil,
+        employees: SchemaOrg.Person? = nil,
+        ethicsPolicy: SchemaOrg.Range.EthicsPolicy? = nil,
+        event: SchemaOrg.Event? = nil,
+        events: SchemaOrg.Event? = nil,
+        faxNumber: Swift.String? = nil,
+        founder: SchemaOrg.Range.Founder? = nil,
+        founders: SchemaOrg.Person? = nil,
+        foundingDate: ISO_8601.CalendarDate? = nil,
+        foundingLocation: SchemaOrg.Place? = nil,
+        funder: SchemaOrg.Range.Funder? = nil,
+        funding: SchemaOrg.Grant? = nil,
+        globalLocationNumber: Swift.String? = nil,
+        hasCertification: SchemaOrg.Certification? = nil,
+        hasCredential: SchemaOrg.Credential? = nil,
+        hasGS1DigitalLink: RFC_3986.URI? = nil,
+        hasMemberProgram: SchemaOrg.MemberProgram? = nil,
+        hasMerchantReturnPolicy: SchemaOrg.MerchantReturnPolicy? = nil,
+        hasOfferCatalog: SchemaOrg.OfferCatalog? = nil,
+        hasPOS: SchemaOrg.Place? = nil,
+        hasProductReturnPolicy: SchemaOrg.ProductReturnPolicy? = nil,
+        hasShippingService: SchemaOrg.ShippingService? = nil,
+        interactionStatistic: SchemaOrg.InteractionCounter? = nil,
+        isicV4: Swift.String? = nil,
+        iso6523Code: Swift.String? = nil,
+        keywords: SchemaOrg.Range.Keywords? = nil,
+        knowsAbout: SchemaOrg.Range.KnowsAbout? = nil,
+        knowsLanguage: SchemaOrg.Range.KnowsLanguage? = nil,
+        legalAddress: SchemaOrg.PostalAddress? = nil,
+        legalName: Swift.String? = nil,
+        legalRepresentative: SchemaOrg.Person? = nil,
+        leiCode: Swift.String? = nil,
+        location: SchemaOrg.Range.Location? = nil,
+        logo: SchemaOrg.Range.Logo? = nil,
+        makesOffer: SchemaOrg.Offer? = nil,
+        member: SchemaOrg.Range.Member? = nil,
+        memberOf: SchemaOrg.Range.MemberOf? = nil,
+        members: SchemaOrg.Range.Members? = nil,
+        naics: Swift.String? = nil,
+        nonprofitStatus: SchemaOrg.NonprofitType? = nil,
+        numberOfEmployees: SchemaOrg.QuantitativeValue? = nil,
+        ownershipFundingInfo: SchemaOrg.Range.OwnershipFundingInfo? = nil,
+        owns: SchemaOrg.Thing? = nil,
+        parentOrganization: SchemaOrg.Organization? = nil,
+        publishingPrinciples: SchemaOrg.Range.PublishingPrinciples? = nil,
+        review: SchemaOrg.Review? = nil,
+        reviews: SchemaOrg.Review? = nil,
+        seeks: SchemaOrg.Demand? = nil,
+        serviceArea: SchemaOrg.Range.ServiceArea? = nil,
+        skills: SchemaOrg.Range.Skills? = nil,
+        slogan: Swift.String? = nil,
+        sponsor: SchemaOrg.Range.Sponsor? = nil,
+        subOrganization: SchemaOrg.Organization? = nil,
+        taxID: Swift.String? = nil,
+        telephone: Swift.String? = nil,
+        unnamedSourcesPolicy: SchemaOrg.Range.UnnamedSourcesPolicy? = nil,
+        vatID: Swift.String? = nil
+    ) {
+        self.init(node: W3C_JSON_LD.Node(id: id, types: [Self.type]))
+        self.additionalType = additionalType
+        self.alternateName = alternateName
+        self.description = description
+        self.disambiguatingDescription = disambiguatingDescription
+        self.identifier = identifier
+        self.image = image
+        self.mainEntityOfPage = mainEntityOfPage
+        self.name = name
+        self.owner = owner
+        self.potentialAction = potentialAction
+        self.sameAs = sameAs
+        self.subjectOf = subjectOf
+        self.url = url
+        self.isStoreOn = isStoreOn
+        self.acceptedPaymentMethod = acceptedPaymentMethod
+        self.actionableFeedbackPolicy = actionableFeedbackPolicy
+        self.address = address
+        self.agentInteractionStatistic = agentInteractionStatistic
+        self.aggregateRating = aggregateRating
+        self.alumni = alumni
+        self.areaServed = areaServed
+        self.authorizedRepresentative = authorizedRepresentative
+        self.award = award
+        self.awards = awards
+        self.brand = brand
+        self.companyRegistration = companyRegistration
+        self.contactPoint = contactPoint
+        self.contactPoints = contactPoints
+        self.correctionsPolicy = correctionsPolicy
+        self.department = department
+        self.dissolutionDate = dissolutionDate
+        self.diversityPolicy = diversityPolicy
+        self.diversityStaffingReport = diversityStaffingReport
+        self.duns = duns
+        self.email = email
+        self.employee = employee
+        self.employees = employees
+        self.ethicsPolicy = ethicsPolicy
+        self.event = event
+        self.events = events
+        self.faxNumber = faxNumber
+        self.founder = founder
+        self.founders = founders
+        self.foundingDate = foundingDate
+        self.foundingLocation = foundingLocation
+        self.funder = funder
+        self.funding = funding
+        self.globalLocationNumber = globalLocationNumber
+        self.hasCertification = hasCertification
+        self.hasCredential = hasCredential
+        self.hasGS1DigitalLink = hasGS1DigitalLink
+        self.hasMemberProgram = hasMemberProgram
+        self.hasMerchantReturnPolicy = hasMerchantReturnPolicy
+        self.hasOfferCatalog = hasOfferCatalog
+        self.hasPOS = hasPOS
+        self.hasProductReturnPolicy = hasProductReturnPolicy
+        self.hasShippingService = hasShippingService
+        self.interactionStatistic = interactionStatistic
+        self.isicV4 = isicV4
+        self.iso6523Code = iso6523Code
+        self.keywords = keywords
+        self.knowsAbout = knowsAbout
+        self.knowsLanguage = knowsLanguage
+        self.legalAddress = legalAddress
+        self.legalName = legalName
+        self.legalRepresentative = legalRepresentative
+        self.leiCode = leiCode
+        self.location = location
+        self.logo = logo
+        self.makesOffer = makesOffer
+        self.member = member
+        self.memberOf = memberOf
+        self.members = members
+        self.naics = naics
+        self.nonprofitStatus = nonprofitStatus
+        self.numberOfEmployees = numberOfEmployees
+        self.ownershipFundingInfo = ownershipFundingInfo
+        self.owns = owns
+        self.parentOrganization = parentOrganization
+        self.publishingPrinciples = publishingPrinciples
+        self.review = review
+        self.reviews = reviews
+        self.seeks = seeks
+        self.serviceArea = serviceArea
+        self.skills = skills
+        self.slogan = slogan
+        self.sponsor = sponsor
+        self.subOrganization = subOrganization
+        self.taxID = taxID
+        self.telephone = telephone
+        self.unnamedSourcesPolicy = unnamedSourcesPolicy
+        self.vatID = vatID
+    }
+}
